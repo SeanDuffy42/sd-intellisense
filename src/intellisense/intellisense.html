@@ -1,0 +1,8 @@
+<form name="$ctrl.searchForm">
+	<div class="form-group">
+		<input class="form-control" name="text" type="text" ng-model="$ctrl.text" ng-model-options=" {getterSetter: true }" ng-trim="false" autocomplete="off"/>
+		<ul class="list-group" ng-style="$ctrl.getStyle()">
+			<li class="list-group-item" ng-repeat="sugestion in ($ctrl.filteredSugestions = ($ctrl.sugestions | filter:$ctrl.filter))" ng-bind-html="sugestion | emboldenMatch:$ctrl.getDelta().value"></li>
+		</ul>
+	</div>
+</form>

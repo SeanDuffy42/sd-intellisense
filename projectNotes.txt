@@ -1,0 +1,45 @@
+Notes:
+
+Bugs:
+-se se no suggestions
+
+ToDo:
+-Write unit tests
+-Performance enhancements i.e. (not running functions more then I need to/more caching data in local vars)
+-Create and add code to Github
+-Extract bare minimum code and create npm package
+-Create Demo Page
+
+Features to Add:
+
+	Version 0:
+		Done:
+			-Highlight/Bold match part of suggestion
+		ToDo:
+			-Add Space after tab complete
+			-Hover style for drop down
+			-Handle click on suggestions
+			-Handle arrow navigation for suggestions
+			-Limit number of suggestions
+
+	Version 1:
+		-Use 'contains' logic for matching instead of 'starts with'
+		-Option to only allow suggestions
+		-Google like gray background
+
+Future Feature Ides:
+-Add options object to control various features
+-Option to add tokens from input to suggestion list
+
+Someday:
+-Handle textarea/(other text inputs)
+-Filter suggestions based on context or template i.e. (SELECT * FROM <tableNames>)
+-Port to other languages/frameworks i.e (Angular(aka Angular 2)/typescript/python/ruby/...)
+
+Maybe:
+-Convert/Add attribute directive opposed to element
+
+---4/24/2017---
+Fixed space bug, how ever we may need to trim ng-model at some point.
+
+
