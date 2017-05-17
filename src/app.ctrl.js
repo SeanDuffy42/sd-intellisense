@@ -38,7 +38,8 @@
 								"UNION ALL",
 								"UPDATE",
 								"WHERE",
-								"SUM"];
+								"SUM",
+								"FROM"];
 	}]);
 
 })();
