@@ -24,6 +24,7 @@
 								"IN",
 								"INNER JOIN",
 								"INSERT INTO",
+								"JOIN",
 								"LEFT JOIN",
 								"LIKE",
 								"OR",
