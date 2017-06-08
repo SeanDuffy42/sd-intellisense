@@ -8,12 +8,19 @@
 		sdIntellisenseCtrl.prevText = '';
 		sdIntellisenseCtrl.curText = '';
 
+		sdIntellisenseCtrl.selectedIndex = 0;
+
+		sdIntellisenseCtrl.filteredSugestions = [];
+
 		var position = 0;
 
 		sdIntellisenseCtrl.text = function (newValue) {
 			if(angular.isDefined(newValue)){
 				sdIntellisenseCtrl.prevText = sdIntellisenseCtrl.curText;
 				sdIntellisenseCtrl.curText = newValue;
+
+				//If the text changes, reset the selected sugestion
+				sdIntellisenseCtrl.selectedIndex = 0;
 			}
 			else{
 				return sdIntellisenseCtrl.curText;
@@ -47,21 +54,30 @@
 			}
 		};
 
+		sdIntellisenseCtrl.getLiStyle = function (index) {
+			if(index == sdIntellisenseCtrl.selectedIndex){
+				return {'background-color': 'lightgrey'};
+			}
+		};
+
 		$element.on('keydown', function(e) {
-			if(e.which === 9 && sdIntellisenseCtrl.filteredSugestions.length > 0){
-				var currentText = sdIntellisenseCtrl.text();
-
-				var deltaToken = getDelta();
-
-				var occurences = getIndicesOf(deltaToken.value,currentText,false);
-
-				//sdIntellisenseCtrl.text(currentText.replace(deltaToken.value,sdIntellisenseCtrl.filteredSugestions[0]));
-				sdIntellisenseCtrl.curText = (replaceAtIndex(currentText, deltaToken.index, deltaToken.value, sdIntellisenseCtrl.filteredSugestions[0]));
-				sdIntellisenseCtrl.prevText = sdIntellisenseCtrl.curText
-
-				$scope.$digest();
-
+			if((e.which === 9 || e.which === 13) && sdIntellisenseCtrl.filteredSugestions.length > 0){
+				sdIntellisenseCtrl.completeSugesstion(sdIntellisenseCtrl.selectedIndex);
 				e.preventDefault();
+			}
+
+			//Down Arrow
+			else if(e.which === 40){
+				if(sdIntellisenseCtrl.selectedIndex + 1 < sdIntellisenseCtrl.filteredSugestions.length)
+					sdIntellisenseCtrl.selectedIndex++;
+				$scope.$digest();
+			}
+
+			//Up Arrow
+			else if(e.which === 38){
+				if(sdIntellisenseCtrl.selectedIndex - 1 > -1)
+					sdIntellisenseCtrl.selectedIndex--;
+				$scope.$digest();
 			}
 		})
 
@@ -84,7 +100,7 @@
 		function replaceAtIndex(string, at, oldString, newString) {
 			var tokens = string.trim().split(/\s+/g);
 
-			tokens[at] = newString;
+			tokens[at] = newString + ' ';
 
 			var result =  tokens.join(' ');
 
@@ -107,6 +123,22 @@
 			}
 			return indices;
 		}
+
+		sdIntellisenseCtrl.completeSugesstion = function (index) {
+				var currentText = sdIntellisenseCtrl.text();
+
+				var deltaToken = getDelta();
+
+				var occurences = getIndicesOf(deltaToken.value,currentText,false);
+
+				sdIntellisenseCtrl.curText = (replaceAtIndex(currentText, deltaToken.index, deltaToken.value, sdIntellisenseCtrl.filteredSugestions[index]));
+				sdIntellisenseCtrl.prevText = sdIntellisenseCtrl.curText
+
+				sdIntellisenseCtrl.selectedIndex = 0;
+
+				$scope.$digest();
+
+		};
 
 		sdIntellisenseCtrl.getDelta = getDelta;
 	}])

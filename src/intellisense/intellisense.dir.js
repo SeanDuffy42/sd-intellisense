@@ -7,6 +7,6 @@
 				sugestions: '='
 			},
 			controller: 'sdIntellisenseCtrl',
-			templateUrl: '/sd-intellisense/src/intellisense/intellisense.html'
+			templateUrl: '/src/intellisense/intellisense.html'
 		});
 })();

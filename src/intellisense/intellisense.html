@@ -2,7 +2,11 @@
 	<div class="form-group">
 		<input class="form-control" name="text" type="text" ng-model="$ctrl.text" ng-model-options=" {getterSetter: true }" ng-trim="false" autocomplete="off"/>
 		<ul class="list-group" ng-style="$ctrl.getStyle()">
-			<li class="list-group-item" ng-repeat="sugestion in ($ctrl.filteredSugestions = ($ctrl.sugestions | filter:$ctrl.filter))" ng-bind-html="sugestion | emboldenMatch:$ctrl.getDelta().value"></li>
+			<li class="list-group-item" ng-style="$ctrl.getLiStyle($index)" ng-click="$ctrl.completeSugesstion($index)" ng-repeat="sugestion in ($ctrl.filteredSugestions = ($ctrl.sugestions | filter:$ctrl.filter)) | limitTo:5">
+				<div>
+					<ng-bind-html ng-bind-html="sugestion | emboldenMatch:$ctrl.getDelta().value"></ng-bind-html>
+				</div>
+			</li>
 		</ul>
 	</div>
 </form>
